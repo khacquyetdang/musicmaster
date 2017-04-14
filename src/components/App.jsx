@@ -131,19 +131,23 @@ class App extends Component {
     console.log('this.props', this.props);
     const ALBUM_URL = 'https://api.spotify.com/v1/artists/';
     const { artist } = this.props;
-    let FETCH_URL = `${ALBUM_URL}${artist.id}/top-tracks?country=FR&`;
-    console.log('top-tracks url: ', FETCH_URL);
-    fetch(FETCH_URL, {method: 'GET'}).then(response => response.json()).then(json => {
-      console.log("artist\'s top top-tracks: ", json);
-      const {tracks} = json;
-      this.props.setTopTracks({tracks});
-      bake_cookie('artist_tracks', json);
-    });
+    if (artist !== null)
+    {
+      let FETCH_URL = `${ALBUM_URL}${artist.id}/top-tracks?country=FR&`;
+      console.log('top-tracks url: ', FETCH_URL);
+      fetch(FETCH_URL, {method: 'GET'}).then(response => response.json()).then(json => {
+        console.log("artist\'s top top-tracks: ", json);
+        const {tracks} = json;
+        this.props.setTopTracks({tracks});
+        bake_cookie('artist_tracks', json);
+      });
+    }
   }
 
   render()
   {
     console.log("render this.props", this.props);
+    console.log("render this.props artist", this.props.artist);
     return (
       <div className="App">
         <div className="App-title">Music Master</div>
@@ -163,23 +167,25 @@ class App extends Component {
           </FormGroup>
           {
             <div>
+              {
+                this.props.artist !== null ?
+                <Profile artist={this.props.artist}/>
+                : <div></div>
+            }
 
-              <Profile artist={this.props.artist}/>
-              <Gallery tracks={this.state.tracks}/>
-            </div>
-          }
-        </div>
-      );
-    }
+            <Gallery tracks={this.state.tracks}/>
+          </div>
+        }
+      </div>
+    );
   }
+}
 
-  function mapStateToProps(state)
-  {
-    console.log("mapStateToProps state", state);
-    const { artist, top_tracks } = state;
-    return {
-      artist, top_tracks
-    }
-  }
+function mapStateToProps(state)
+{
+  console.log("mapStateToProps state", state);
+  const { artist } = state;
+  return { artist : artist};  
+}
 
-  export default  connect(mapStateToProps, {setArtist, setTopTracks}) (App);
+export default  connect(mapStateToProps, {setArtist, setTopTracks}) (App);
