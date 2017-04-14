@@ -5,7 +5,12 @@ export const setArtist = (artist) => {
   const action = {
     type: SET_ARTIST,
     artist
+<<<<<<< HEAD
   };  
+=======
+  };
+  console.log('set artist action', action);
+>>>>>>> cd934c573d5b3d9b0a59a674ebfa5e3fa3b524b6
   return action;
 }
 

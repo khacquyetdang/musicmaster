@@ -28,7 +28,6 @@ class App extends Component {
     //this.clientCredentials();
 
     const artist = read_cookie('artist');
-
     this.props.setArtist(artist);
     if (artist != null)
     {
@@ -121,6 +120,7 @@ class App extends Component {
     console.log("FETCH_URL ", FETCH_URL);
     fetch(FETCH_URL, {method: 'GET'}).then(response => response.json()).then(json => {
       const artist = json.artists.items[0];
+<<<<<<< HEAD
       this.props.setArtist(artist);
       this.searchTopTracks(artist);
     });
@@ -135,12 +135,38 @@ class App extends Component {
       fetch(FETCH_URL, {method: 'GET'}).then(response => response.json()).then(json => {
         const {tracks} = json;
         this.props.setTopTracks(tracks);
+=======
+      this.props.setArtist({artist});
+      bake_cookie('artist', artist);
+      this.searchTopTracks();
+    });
+  }
+
+  searchTopTracks() {
+    console.log('this.props', this.props);
+    const ALBUM_URL = 'https://api.spotify.com/v1/artists/';
+    const { artist } = this.props;
+    if (artist !== null)
+    {
+      let FETCH_URL = `${ALBUM_URL}${artist.id}/top-tracks?country=FR&`;
+      console.log('top-tracks url: ', FETCH_URL);
+      fetch(FETCH_URL, {method: 'GET'}).then(response => response.json()).then(json => {
+        console.log("artist\'s top top-tracks: ", json);
+        const {tracks} = json;
+        this.props.setTopTracks({tracks});
+        bake_cookie('artist_tracks', json);
+>>>>>>> cd934c573d5b3d9b0a59a674ebfa5e3fa3b524b6
       });
     }
   }
 
   render()
   {
+<<<<<<< HEAD
+=======
+    console.log("render this.props", this.props);
+    console.log("render this.props artist", this.props.artist);
+>>>>>>> cd934c573d5b3d9b0a59a674ebfa5e3fa3b524b6
     return (
       <div className="App">
         <div className="App-title">Music Master</div>
@@ -166,7 +192,11 @@ class App extends Component {
                 : <div></div>
             }
 
+<<<<<<< HEAD
             <Gallery tracks={this.props.top_tracks}/>
+=======
+            <Gallery tracks={this.state.tracks}/>
+>>>>>>> cd934c573d5b3d9b0a59a674ebfa5e3fa3b524b6
           </div>
         }
       </div>
@@ -176,8 +206,14 @@ class App extends Component {
 
 function mapStateToProps(state)
 {
+<<<<<<< HEAD
   const { artist, top_tracks } = state;
   return { artist, top_tracks};
+=======
+  console.log("mapStateToProps state", state);
+  const { artist } = state;
+  return { artist : artist};
+>>>>>>> cd934c573d5b3d9b0a59a674ebfa5e3fa3b524b6
 }
 
 export default  connect(mapStateToProps, {setArtist, setTopTracks}) (App);
