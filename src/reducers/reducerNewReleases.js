@@ -1,15 +1,17 @@
 import {
-    SET_TOP_TRACKS
+    SET_NEW_RELEASES
 } from '../constants';
+
+import {bake_cookie, read_cookie} from 'sfcookies';
 
 export default (state = [], action) => {
 
     switch (action.type) {
-        case SET_TOP_TRACKS:
+        case SET_NEW_RELEASES:
             const {
-                topTracks
+                newReleases
             } = action;
-            return topTracks;
+            return newReleases;
         default:
             return state;
     }

@@ -1,2 +1,4 @@
 export const SET_ARTIST = 'SET_ARTIST';
 export const SET_TOP_TRACKS = 'SET_TOP_TRACKS';
+export const SET_ACESS_TOKEN = 'SET_ACESS_TOKEN';
+export const SET_NEW_RELEASES = 'SET_NEW_RELEASES';

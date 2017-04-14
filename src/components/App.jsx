@@ -3,7 +3,7 @@ import base64 from 'base64-js';
 var request = require('request');
 import {bake_cookie, read_cookie} from 'sfcookies';
 import {connect} from 'react-redux';
-import {setArtist, setTopTracks} from '../actions';
+import {setArtist, setTopTracks, setAcessToken} from '../actions';
 import './App.css';
 import {FormGroup, FormControl, InputGroup, Glyphicon} from 'react-bootstrap';
 import * as SpotifyWebApi from 'spotify-web-api-js';
@@ -19,12 +19,13 @@ class App extends Component {
             artist: null,
             tracks: null,
             featurePlaylists: null,
+            accesToken: '',
             spotify_code: ''
         };
     }
 
     componentDidMount() {
-        //this.clientCredentials();
+        this.clientCredentials();
 
         const artist = read_cookie('artist');
         this.props.setArtist(artist);
@@ -67,6 +68,7 @@ class App extends Component {
 
                 // use the access token to access the Spotify Web API
                 var token = body.access_token;
+                this.props.setAcessToken({accesToken : token});
                 console.log("access_token: ", token);
             }
         });
@@ -168,8 +170,8 @@ class App extends Component {
 }
 
 function mapStateToProps(state) {
-    const {artist, top_tracks} = state;
-    return {artist, top_tracks};
+    const {artist, topTracks} = state;
+    return {artist, topTracks};
 
 }
 

@@ -1,9 +1,13 @@
 import { combineReducers } from 'redux';
 
 import artist from './reducerArtist';
-import top_tracks from './reducerTopTracks';
+import topTracks from './reducerTopTracks';
+import newReleases from './reducerNewReleases';
+import accessToken from './reducerAccessToken';
 
 export default combineReducers({
   artist,
-  top_tracks
+  topTracks,
+  newReleases,
+  accessToken
 });
