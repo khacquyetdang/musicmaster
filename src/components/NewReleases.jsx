@@ -32,7 +32,7 @@ class NewReleases extends Component {
     //spotifyApi.setPromiseImplementation(Q);
     var params = {
       country : 'FR',
-      limit : 10
+      limit : 20
     }
     spotifyApi.getNewReleases(params)
     .then(data =>{
