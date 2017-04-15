@@ -9,6 +9,7 @@ import {FormGroup, FormControl, InputGroup, Glyphicon} from 'react-bootstrap';
 import * as SpotifyWebApi from 'spotify-web-api-js';
 import Profile from './Profile';
 import Gallery from './Gallery';
+import NewReleases from './NewReleases';
 
 class App extends Component {
   constructor(props) {
@@ -111,15 +112,7 @@ class App extends Component {
     });
 
   }
-  getFeaturePlayLists() {
-    const FeaturePlaylists_URL = 'https://api.spotify.com/v1/browse/featured-playlists?';
-    const FETCH_URL = `${FeaturePlaylists_URL}country='FR'&limit='10'`;
-    const OAUTH_TOKEN = 'Bearer BQBDWQvfrLptL_t17UBmAWwH7DylvBOI1HCnKOU0ZZyxk7Dqo7viP06Z5xwHPkKonXw7JghGdnWr20rSUlVJJMfVhgj5OiiGncbfuEndrtmlmIMIyKSShPLbRxqz5HYB0KjYLxM49LfMzTwiCC3weJ3KcY2CT9b2d1qTDrl5nGtVXuQUMP6TX4Dtd4q5C6bgoJ6JrEawF0D9DV-pizhD99OWo7bJd8MnTHWeELc8LpRrgU1I5Fy6cnS55T9c1bHWKTAYFJ9L76QQogZ0kVoGO75p-flq-52PUGz_P6I4xALaNRQ9Q7nr516WkG_-g3-wKFC-7y8';
 
-    fetch(FETCH_URL, {method: 'GET'}).then(response => response.json()).then(json => {
-      console.log("featured-playlists: ", json);
-    });
-  }
   search() {
     console.log('this.state', this.state);
     const SEARCH_URL = 'https://api.spotify.com/v1/search?';
@@ -164,16 +157,19 @@ class App extends Component {
               </InputGroup.Addon>
             </InputGroup>
           </FormGroup>
-          {< div > {
-            this.props.artist !== null
-            ? <Profile artist={this.props.artist}/>
-          : <div></div>
-      } < Gallery tracks = {
-        this.props.topTracks
-      } /> < /div>}
-    </div>
-  );
-}
+          {
+            <div>
+              {
+                this.props.artist !== null ? <Profile artist={this.props.artist}/> : <div></div>
+            }
+            <Gallery tracks = { this.props.topTracks } />
+            <NewReleases />
+
+          </div>
+        }
+      </div>
+    );
+  }
 }
 
 function mapStateToProps(state) {

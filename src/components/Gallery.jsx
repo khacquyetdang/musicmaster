@@ -45,7 +45,6 @@ class Gallery extends Component {
                     <span>| |</span>
                     : <span>&#9654;</span>
                   }
-
                 </div>
               </div>
               <p className="track-text">
@@ -57,7 +56,6 @@ class Gallery extends Component {
         </div>
       );
     }
-
   }
 
   export default Gallery;
