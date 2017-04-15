@@ -2,7 +2,7 @@ import {
     SET_ARTIST
 } from '../constants';
 
-import {bake_cookie, read_cookie} from 'sfcookies';
+import {bake_cookie} from 'sfcookies';
 
 export default (state = null, action) => {
 

@@ -35,7 +35,6 @@ class Gallery extends Component {
       <div>
         {tracks != null
           ? (tracks.map((track, k) => {
-            console.log("track: ", track);
             const tracksImg = track.album.images[0].url;
             return <div key={k} className="track" onClick={() => this.playAudio(track.preview_url)}>
               <img src={tracksImg} className="track-img" alt="track"></img>

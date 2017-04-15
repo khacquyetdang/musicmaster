@@ -1,11 +1,11 @@
 import {
-    SET_ACESS_TOKEN
+    SET_ACCESS_TOKEN
 } from '../constants';
 
 export default (state = '', action) => {
 
     switch (action.type) {
-        case SET_ACESS_TOKEN:
+        case SET_ACCESS_TOKEN:
           const {
             accessToken
           } = action;

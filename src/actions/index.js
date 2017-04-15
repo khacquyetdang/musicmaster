@@ -1,4 +1,4 @@
-import { SET_ARTIST, SET_TOP_TRACKS, SET_ACESS_TOKEN, SET_NEW_RELEASES } from '../constants';
+import { SET_ARTIST, SET_TOP_TRACKS, SET_ACCESS_TOKEN, SET_NEW_RELEASES } from '../constants';
 
 
 export const setArtist = (artist) => {
@@ -10,10 +10,10 @@ export const setArtist = (artist) => {
 }
 
 
-export const setAccessToken = (accesToken) => {
+export const setAccessToken = (accessToken) => {
   const action = {
-    type: SET_ACESS_TOKEN,
-    accesToken
+    type: SET_ACCESS_TOKEN,
+    accessToken
   }
   return action;
 }

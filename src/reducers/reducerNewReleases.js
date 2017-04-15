@@ -2,7 +2,7 @@ import {
     SET_NEW_RELEASES
 } from '../constants';
 
-import {bake_cookie, read_cookie} from 'sfcookies';
+//import {bake_cookie, read_cookie} from 'sfcookies';
 
 export default (state = [], action) => {
 
