@@ -11,14 +11,59 @@ class NewReleases extends Component {
   {
     super(props);
     this.state = {
-      newReleasesItems: []
+      newReleasesItems: [],
+      newReleasesAlbumsTracks: {},
+      spotifyApi : null,
+      playingUrl : '',
+      playingAlbum : '',
+      audio: null,
+      playing: false
     }
   }
 
   componentDidMount(){
     console.log("newReleases props", this.props);
     this.getNewReleaseLists();
+  }
 
+
+  playAudio(album)
+  {
+    const albumId = album.id;
+    console.log("playAudio album id: ", album.id);
+    console.log("playAudio album tracks: ", this.state.newReleasesAlbumsTracks["'" + albumId + "'"]);
+
+    console.log("playAudio : ", this.state.newReleasesAlbumsTracks);
+    let trackUrl = this.state.newReleasesAlbumsTracks[album.id].items[0].preview_url;
+    let audio = new Audio(trackUrl);
+    if (this.state.playing === false) {
+      audio.play();
+      this.setState({playing: true, playingAlbum: album, audio});
+    } else {
+      if (this.state.playingAlbum === album) {
+        this.state.audio.pause();
+        this.setState({playing: false});
+      } else {
+        this.state.audio.pause();
+        audio.play();
+        this.setState({playing: true, playingAlbum: album, audio});
+      }
+    }
+  }
+
+  getNewReleaseAlbumsTracks()
+  {
+    const { newReleasesItems } = this.state;
+    newReleasesItems.map((album, k) => {
+      let newReleasesAlbumsTracks = this.state.newReleasesAlbumsTracks;
+      this.state.spotifyApi.getAlbumTracks(album.id)
+      .then(data =>{
+        newReleasesAlbumsTracks[album.id] =  data;
+        this.setState({newReleasesAlbumsTracks});
+      }, error => {
+        console.log("getTracks error", error);
+      });
+    });
   }
 
   getNewReleaseLists() {
@@ -28,6 +73,7 @@ class NewReleases extends Component {
 
     var Spotify = require('spotify-web-api-js');
     var spotifyApi = new Spotify();
+    this.setState({spotifyApi});
     spotifyApi.setAccessToken(accessToken);
     //spotifyApi.setPromiseImplementation(Q);
     var params = {
@@ -37,20 +83,17 @@ class NewReleases extends Component {
     spotifyApi.getNewReleases(params)
     .then(data =>{
       const { albums }  = data;
-      console.log("new releases albums ", albums);
       //this.props.setNewReleases(albums);
       this.setState({newReleasesItems: albums.items});
+      this.getNewReleaseAlbumsTracks();
     }, error => {
-      console.log("error getNewReleases ", error);
+      console.log("getNewReleaseLists error", error);
     });
   }
 
   render()
   {
-    console.log("new releases this.props ", this.props);
-    console.log("new releases state ", this.state);
     let { newReleasesItems } = this.state;
-    console.log("new releases render newReleasesItems ", newReleasesItems);
 
     return (
       <div>
@@ -58,17 +101,15 @@ class NewReleases extends Component {
         <div className="newReleasesContainer">
           {
             newReleasesItems.map((album, k) => {
-              console.log("track render : ", album);
-              console.log("key render : ", k);
               const tracksImg = album.images[0].url;
               const {name} = album;
               const artist_name = album.artists[0].name;
-              console.log("artist name : ", artist_name);
-              console.log("albulm name : ", name);
 
               return (
                 <div key={k} className="album">
-                  <img src={tracksImg}  className="album_image" alt="track"></img>
+                  <div className="album_image_container" onClick = {() => this.playAudio(album)}>
+                    <img src={tracksImg} className="album_image"  alt="track"></img>
+                  </div>
                   <div className="album_name">{name}</div>
                   <div className="album_artist_name">{artist_name}</div>
                 </div>
