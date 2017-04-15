@@ -163,7 +163,7 @@ class App extends Component {
                 this.props.artist !== null ? <Profile artist={this.props.artist}/> : <div></div>
             }
             <Gallery tracks = { this.props.topTracks } />
-            <NewReleases />
+            { this.props.accessToken !== '' ? <NewReleases /> : <div></div> }
 
           </div>
         }

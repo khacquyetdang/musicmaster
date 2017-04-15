@@ -10,10 +10,15 @@ class NewReleases extends Component {
   constructor(props)
   {
     super(props);
+    this.state = {
+      newReleasesItems: []
+    }
   }
 
   componentDidMount(){
     console.log("newReleases props", this.props);
+    this.getNewReleaseLists();
+
   }
 
   getNewReleaseLists() {
@@ -31,53 +36,54 @@ class NewReleases extends Component {
     }
     spotifyApi.getNewReleases(params)
     .then(data =>{
-        const { albums }  = data;
-        console.log("new releases albums ", albums);
-        this.props.setNewReleases(albums);
+      const { albums }  = data;
+      console.log("new releases albums ", albums);
+      //this.props.setNewReleases(albums);
+      this.setState({newReleasesItems: albums.items});
     }, error => {
       console.log("error getNewReleases ", error);
     });
-    console.log("spotifyApi ", spotifyApi);
   }
 
-  render() {
+  render()
+  {
     console.log("new releases this.props ", this.props);
-    this.getNewReleaseLists();
-    const {tracks} = this.props;
+    console.log("new releases state ", this.state);
+    let { newReleasesItems } = this.state;
+    console.log("new releases render newReleasesItems ", newReleasesItems);
+
     return (
       <div>
         <h1>New releases</h1>
-        {tracks != null
-          ? (tracks.map((track, k) => {
-            console.log("track: ", track);
-            const tracksImg = track.album.images[0].url;
-            return <div key={k} className="track" onClick={() => this.playAudio(track.preview_url)}>
-              <img src={tracksImg} className="track-img" alt="track"></img>
-              <div className="track-play">
-                <div className="track-play-inner">
-                  {
-                    this.state.playingUrl === track.preview_url ?
-                    <span>| |</span>
-                    : <span>&#9654;</span>
-                }
+        <div className="newReleasesContainer">
+          {
+            newReleasesItems.map((album, k) => {
+              console.log("track render : ", album);
+              console.log("key render : ", k);
+              const tracksImg = album.images[0].url;
+              const {name} = album;
+              const artist_name = album.artists[0].name;
+              console.log("artist name : ", artist_name);
+              console.log("albulm name : ", name);
 
-              </div>
-            </div>
-            <p className="track-text">
-              {track.name}
-            </p>
-          </div>;
-        }))
-        : <div></div>}
+              return (
+                <div key={k} className="album">
+                  <img src={tracksImg}  className="album_image" alt="track"></img>
+                  <div className="album_name">{name}</div>
+                  <div className="album_artist_name">{artist_name}</div>
+                </div>
+              )
+            })
+          }
+        </div>
       </div>
     );
   }
-
 }
 function mapStateToProps(state) {
   console.log("mapStateToProps new releases state", state);
-  const {accessToken} = state;
-  return {accessToken};
+  const {accessToken, newReleases } = state;
+  return {accessToken, newReleases};
 
 }
 
