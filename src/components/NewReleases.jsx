@@ -70,7 +70,7 @@ class NewReleases extends Component {
     //const FeaturePlaylists_URL = 'https://api.spotify.com/v1/browse/featured-playlists?';
     //const FETCH_URL = `${FeaturePlaylists_URL}country='FR'&limit='10'`;
     const { accessToken } = this.props;
-
+    console.log("accesToken", this.props);
     var Spotify = require('spotify-web-api-js');
     var spotifyApi = new Spotify();
     this.setState({spotifyApi});

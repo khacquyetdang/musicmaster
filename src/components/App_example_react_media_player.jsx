@@ -3,8 +3,7 @@ import ReactDOM from 'react-dom'
 import MediaPlayer from './reactMediaPlayer/MediaPlayer';
 import VideoPlayer from './reactMediaPlayer/VideoPlayer';
 import AudioPlayer from './reactMediaPlayer/AudioPlayer';
-import ReactAudioPlayer from 'react-audio-player'
-import ReactPlayer from 'react-player'
+
 import { Media, Player, controls } from 'react-media-player'
 const { PlayPause } = controls
 
@@ -12,7 +11,7 @@ import './main.scss'
 
 const mod = (num, max) => ((num % max) + max) % max
 const playlist = [
-  { src: 'https://p.scdn.co/mp3-preview/8d5db5c968b12a33224143b525cb344b9007f546', label: 'Huong Tram' },
+  { src: 'http://www.youtube.com/embed/h3YVKTxTOgU', label: 'Brand New (Youtube)' },
   { src: 'https://youtu.be/VOyYwzkQB98', label: 'Neck Deep (Youtube)' },
   { src: 'https://player.vimeo.com/video/156147818', label: 'Pump (Vimeo)' },
   { src: 'https://vimeo.com/channels/staffpicks/150734165', label: 'Lesley (Vimeo)' },
@@ -36,20 +35,20 @@ class Playlist extends Component {
     const { tracks, currentTrack } = this.props
     return (
       <aside className="media-playlist">
-      <header className="media-playlist-header">
-      <h3 className="media-playlist-title">Playlist</h3>
-      </header>
-      <ul className="media-playlist-tracks">
-      {tracks.map(track =>
-        <li
-        key={track.label}
-        className={`media-playlist-track ${track === currentTrack ? 'is-active' : ''}`}
-        onClick={this._handleTrackClick.bind(this, track)}
-        >
-        {track.label}
-        </li>
-      )}
-      </ul>
+        <header className="media-playlist-header">
+          <h3 className="media-playlist-title">Playlist</h3>
+        </header>
+        <ul className="media-playlist-tracks">
+          {tracks.map(track =>
+            <li
+              key={track.label}
+              className={`media-playlist-track ${track === currentTrack ? 'is-active' : ''}`}
+              onClick={this._handleTrackClick.bind(this, track)}
+            >
+              {track.label}
+            </li>
+          )}
+        </ul>
       </aside>
     )
   }
@@ -76,37 +75,36 @@ class App extends Component {
     const { showMediaPlayer, currentTrack, repeatTrack, autoPlay } = this.state
     return (
       <div>
-      <button
-      onClick={() => this.setState({ showMediaPlayer: !showMediaPlayer })}
-      >
-      Toggle Media Player
-      </button>
-      { showMediaPlayer &&
-        <div className="media-player-wrapper">
-        <MediaPlayer
-        ref={c => this._mediaPlayer = c}
-        src={currentTrack.src}
-        autoPlay={autoPlay}
-        loop={repeatTrack}
-        currentTrack={currentTrack.label}
-        repeatTrack={repeatTrack}
-        onPrevTrack={() => this._navigatePlaylist(-1)}
-        onNextTrack={() => this._navigatePlaylist(1)}
-        onRepeatTrack={() => { this.setState({ repeatTrack: !repeatTrack }) }}
-        onPlay={() => !autoPlay && this.setState({ autoPlay: true })}
-        onPause={() => this.setState({ autoPlay: false })}
-        onEnded={() => !repeatTrack && this._navigatePlaylist(1)}
-        />
-        <Playlist
-        tracks={playlist}
-        currentTrack={currentTrack}
-        onTrackClick={this._handleTrackClick}
-        />
-        </div>
-      }
-      <VideoPlayer src="http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4"/>
-      <AudioPlayer src="https://p.scdn.co/mp3-preview/8d5db5c968b12a33224143b525cb344b9007f546"/>
-      <ReactAudioPlayer src='https://p.scdn.co/mp3-preview/8d5db5c968b12a33224143b525cb344b9007f546' autoPlay />
+        <button
+          onClick={() => this.setState({ showMediaPlayer: !showMediaPlayer })}
+        >
+          Toggle Media Player
+        </button>
+        { showMediaPlayer &&
+          <div className="media-player-wrapper">
+            <MediaPlayer
+              ref={c => this._mediaPlayer = c}
+              src={currentTrack.src}
+              autoPlay={autoPlay}
+              loop={repeatTrack}
+              currentTrack={currentTrack.label}
+              repeatTrack={repeatTrack}
+              onPrevTrack={() => this._navigatePlaylist(-1)}
+              onNextTrack={() => this._navigatePlaylist(1)}
+              onRepeatTrack={() => { this.setState({ repeatTrack: !repeatTrack }) }}
+              onPlay={() => !autoPlay && this.setState({ autoPlay: true })}
+              onPause={() => this.setState({ autoPlay: false })}
+              onEnded={() => !repeatTrack && this._navigatePlaylist(1)}
+            />
+            <Playlist
+              tracks={playlist}
+              currentTrack={currentTrack}
+              onTrackClick={this._handleTrackClick}
+            />
+          </div>
+        }
+        <VideoPlayer src="http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4"/>
+        <AudioPlayer src="https://p.scdn.co/mp3-preview/8d5db5c968b12a33224143b525cb344b9007f546"/>
       </div>
     )
   }
