@@ -1,8 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import classNames from 'classnames';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
+import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
 import * as actions from '../../actions/index';
 import * as toggleTypes from '../../constants/toggleTypes';
 //import { addAccessTokenWith } from '../../services/api';
@@ -21,9 +21,11 @@ class Player extends React.Component {
   componentDidUpdate() {
     const audioElement = ReactDOM.findDOMNode(this.refs.audio);
 
-    if (!audioElement) { return; }
+    if (!audioElement) {
+      return;
+    }
 
-    const { isPlaying, volume } = this.props;
+    const {isPlaying, volume} = this.props;
     if (isPlaying) {
       audioElement.play();
       audioElement.addEventListener('timeupdate', this.updateProgress, false);
@@ -35,7 +37,9 @@ class Player extends React.Component {
 
   setAudioPosition(ev) {
     const audioElement = ReactDOM.findDOMNode(this.refs.audio);
-    if (!audioElement) { return; }
+    if (!audioElement) {
+      return;
+    }
     const songPercentage = ev.clientX / window.innerWidth;
     const duration = audioElement.duration;
     audioElement.currentTime = duration * songPercentage;
@@ -50,7 +54,7 @@ class Player extends React.Component {
     statusbar.style.width = val + "%";
 
     if (event.target.duration <= event.target.currentTime) {
-      const { playlist, activeTrackId } = this.props;
+      const {playlist, activeTrackId} = this.props;
       if (playlist) {
         if (playlist.length >= 1 && (playlist[playlist.length - 1] !== activeTrackId)) {
           this.props.onActivateIteratedTrack(activeTrackId, 1);
@@ -77,43 +81,29 @@ class Player extends React.Component {
       volume
     } = this.props;
 
-    if (!activeTrackId) { return null; }
+    if (!activeTrackId) {
+      return null;
+    }
 
     const track = entities.tracks[activeTrackId];
-    const { user, title, stream_url } = track;
-    const { username } = entities.users[user];
+    const {user, title, stream_url} = track;
+    const {username} = entities.users[user];
 
     const isMuted = !volume;
 
-    const muteClass = classNames(
-      'fa',
-      {
-        'fa-volume-up': !isMuted,
-        'fa-volume-off': isMuted,
-      }
-    );
+    const muteClass = classNames('fa', {
+      'fa-volume-up': !isMuted,
+      'fa-volume-off': isMuted
+    });
 
-    const playClass = classNames(
-      'fa',
-      {
-        'fa-pause': isPlaying,
-        'fa-play': !isPlaying
-      }
-    );
+    const playClass = classNames('fa', {
+      'fa-pause': isPlaying,
+      'fa-play': !isPlaying
+    });
 
-    const likeClass = classNames(
-      'fa fa-heart',
-      {
-        'is-favorite': track.user_favorite
-      }
-    );
+    const likeClass = classNames('fa fa-heart', {'is-favorite': track.user_favorite});
 
-    const shuffleClass = classNames(
-      'fa fa-random',
-      {
-        randomSelected: isInShuffleMode
-      }
-    );
+    const shuffleClass = classNames('fa fa-random', {randomSelected: isInShuffleMode});
 
     return (
       <div className="player-container">
@@ -125,51 +115,52 @@ class Player extends React.Component {
         <div className="player-content">
           <div className="player-content-action">
             <ButtonInline onClick={() => onActivateIteratedTrack(activeTrackId, -1)}>
-              <i className="fa fa-step-backward" />
+              <i className="fa fa-step-backward"/>
             </ButtonInline>
           </div>
           <div className="player-content-action">
             <ButtonInline onClick={() => onTogglePlayTrack(!isPlaying)}>
-              <i className={playClass} />
+              <i className={playClass}/>
             </ButtonInline>
           </div>
           <div className="player-content-action">
             <ButtonInline onClick={() => onActivateIteratedTrack(activeTrackId, 1)}>
-              <i className="fa fa-step-forward" />
+              <i className="fa fa-step-forward"/>
             </ButtonInline>
           </div>
           <div className="player-content-name">
-            {username} - {title}
+            {username}
+            - {title}
           </div>
           <div className="player-content-action">
             <ButtonInline onClick={() => onSetToggle(toggleTypes.PLAYLIST)}>
-              <i className="fa fa-th-list" /> {playlist.length}
+              <i className="fa fa-th-list"/> {playlist.length}
             </ButtonInline>
           </div>
           <div className="player-content-action">
             <ButtonInline onClick={onSetShuffleMode}>
-              <i className={shuffleClass} />
+              <i className={shuffleClass}/>
             </ButtonInline>
           </div>
           <div className="player-content-action">
             <ButtonInline onClick={() => onSetToggle(toggleTypes.VOLUME)}>
-              <i className={muteClass} />
+              <i className={muteClass}/>
             </ButtonInline>
           </div>
           <div className="player-content-action">
-            {
-              currentUser ?
-              <ButtonInline onClick={() => onLike(track)}>
-                <i className={likeClass} />
-              </ButtonInline> : null
-            }
+            {currentUser
+              ? <ButtonInline onClick={() => onLike(track)}>
+                  <i className={likeClass}/>
+                </ButtonInline>
+              : null
+}
           </div>
           <div className="player-content-action">
             <a data-tip data-for="global">
               <Clipboard component="a" data-clipboard-text={track.permalink_url}>
-                  <div className="player-content-link">
-                    <i className="fa fa-share" />
-                  </div>
+                <div className="player-content-link">
+                  <i className="fa fa-share"/>
+                </div>
               </Clipboard>
             </a>
             <ReactTooltip id="global" event="click" aria-haspopup="true">
@@ -183,12 +174,7 @@ class Player extends React.Component {
   }
 
   render() {
-    const playerClass = classNames(
-      'player',
-      {
-        'player-visible': this.props.activeTrackId
-      }
-    );
+    const playerClass = classNames('player', {'player-visible': this.props.activeTrackId});
 
     return <div className={playerClass}>{this.renderNav()}</div>;
   }
@@ -197,6 +183,14 @@ class Player extends React.Component {
 
 function mapStateToProps(state) {
   return {
+    activeTrackId: 0,
+    isPlaying: true,
+    entities: [],
+    playlist: [],
+    isInShuffleMode: false,
+    volume: 70
+  };
+  /*return {
     activeTrackId: state.player.activeTrackId,
     isPlaying: state.player.isPlaying,
     entities: state.entities,
@@ -204,15 +198,20 @@ function mapStateToProps(state) {
     isInShuffleMode: state.player.isInShuffleMode,
     volume: state.player.volume,
   };
+  */
 }
 
 function mapDispatchToProps(dispatch) {
   return {
     onTogglePlayTrack: bindActionCreators(actions.togglePlayTrack, dispatch),
+    onSetShuffleMode: bindActionCreators(actions.toggleShuffleMode, dispatch),
+    onActivateIteratedTrack: bindActionCreators(actions.activateIteratedTrack, dispatch),
+    /*
+    onTogglePlayTrack: bindActionCreators(actions.togglePlayTrack, dispatch),
     onSetToggle: bindActionCreators(actions.setToggle, dispatch),
     onActivateIteratedTrack: bindActionCreators(actions.activateIteratedTrack, dispatch),
     onLike: bindActionCreators(actions.like, dispatch),
-    onSetShuffleMode: bindActionCreators(actions.toggleShuffleMode, dispatch),
+    onSetShuffleMode: bindActionCreators(actions.toggleShuffleMode, dispatch),*/
   };
 }
 
@@ -227,7 +226,7 @@ Player.propTypes = {
   onActivateIteratedTrack: React.PropTypes.func,
   onLike: React.PropTypes.func,
   onSetShuffleMode: React.PropTypes.func,
-  isInShuffleMode: React.PropTypes.bool,
+  isInShuffleMode: React.PropTypes.bool
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Player);
