@@ -1,6 +1,6 @@
 import {
     SET_TOP_TRACKS
-} from '../constants';
+} from '../constants/constants';
 
 export default (state = [], action) => {
 

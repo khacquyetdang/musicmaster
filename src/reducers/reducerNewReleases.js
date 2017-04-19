@@ -1,10 +1,10 @@
 import {
     SET_NEW_RELEASES
-} from '../constants';
+} from '../constants/constants';
 
-import {bake_cookie, read_cookie} from 'sfcookies';
+//import {bake_cookie, read_cookie} from 'sfcookies';
 
-export default (state = [], action) => {
+export default (state = null, action) => {
 
     switch (action.type) {
         case SET_NEW_RELEASES:
