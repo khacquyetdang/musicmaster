@@ -7,7 +7,7 @@ class Gallery extends Component {
   {
     super(props);
     this.state = {
-      playingUrl : '',
+      playingUrl: '',
       audio: null,
       playing: false
     }
@@ -41,11 +41,9 @@ class Gallery extends Component {
               <img src={tracksImg} className="track-img" alt="track"></img>
               <div className="track-play">
                 <div className="track-play-inner">
-                  {
-                    this.state.playingUrl === track.preview_url ?
-                    <span>| |</span>
-                    : <span>&#9654;</span>
-                  }
+                  {this.state.playingUrl === track.preview_url
+                    ? <span>| |</span>
+                    : <span>&#9654;</span>}
 
                 </div>
               </div>
@@ -55,10 +53,10 @@ class Gallery extends Component {
             </div>;
           }))
           : <div></div>}
-        </div>
-      );
-    }
-
+      </div>
+    );
   }
 
-  export default Gallery;
+}
+
+export default Gallery;
