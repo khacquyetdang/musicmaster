@@ -5,7 +5,6 @@ import { Provider } from 'react-redux';
 import { createStore } from 'redux';
 import reducer from './reducers';
 
-import './components/reactMediaPlayer/main.scss'
 /** add comment **/
 const store = createStore(reducer);
 

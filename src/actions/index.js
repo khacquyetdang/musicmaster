@@ -1,5 +1,17 @@
-import { SET_ARTIST, SET_TOP_TRACKS, SET_ACCESS_TOKEN, SET_NEW_RELEASES } from '../constants';
+import { SET_ARTIST, SET_TOP_TRACKS, SET_ACCESS_TOKEN, SET_NEW_RELEASES } from '../constants/constants';
+import { activateTrack, activateIteratedTrack, addTrackToPlaylist, removeTrackFromPlaylist, clearPlaylist, togglePlayTrack, toggleShuffleMode, changeVolume } from './player';
 
+
+export {
+  activateTrack,
+  togglePlayTrack,
+  addTrackToPlaylist,
+  removeTrackFromPlaylist,
+  clearPlaylist,
+  activateIteratedTrack,
+  toggleShuffleMode,
+  changeVolume
+};
 
 export const setArtist = (artist) => {
   const action = {
