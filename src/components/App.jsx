@@ -3,12 +3,14 @@ import base64 from 'base64-js';
 var request = require('request');
 import {bake_cookie, read_cookie} from 'sfcookies';
 import {connect} from 'react-redux';
-import {setArtist, setTopTracks, setAcessToken} from '../actions';
+import {setArtist, setTopTracks, setAccessToken} from '../actions';
 import './App.css';
 import {FormGroup, FormControl, InputGroup, Glyphicon} from 'react-bootstrap';
 import * as SpotifyWebApi from 'spotify-web-api-js';
 import Profile from './Profile';
 import Gallery from './Gallery';
+import Player from './Player';
+import NewReleases from './NewReleases';
 
 class App extends Component {
   constructor(props) {
@@ -25,7 +27,7 @@ class App extends Component {
   }
 
   componentDidMount() {
-    this.clientCredentials();
+    //this.clientCredentials();
 
     const artist = read_cookie('artist');
     this.props.setArtist(artist);
@@ -33,8 +35,8 @@ class App extends Component {
       console.log("componentDidMount artist", artist);
       this.searchTopTracks(artist);
     }
-    //this.authentificationProcess();
-    //this.getFeaturePlayLists();
+    this.authentificationProcess();
+    this.getFeaturePlayLists();
   }
 
   clientCredentials() {
@@ -73,35 +75,49 @@ class App extends Component {
       }
     });
   }
-
   authentificationProcess() {
     const AUTHORISE_URL = "https://accounts.spotify.com/authorize?";
-    const TOKEN_URL = 'https://accounts.spotify.com/api/token';
+    let TOKEN_URL = 'https://accounts.spotify.com/api/token';
     const CALLBACK_URL = 'http://localhost:3000/';
     const client_id = "864d1c0ec7604e418dbcec6ad2e438de";
     const client_secret = "42eb263122de432faaf7b974c815c64a";
-    const client_credentials = new Buffer(`${client_id}:${client_secret}`);
+    const client_credentials = new Buffer(client_id + ":" + client_secret);
     const client_credentials_base64 = 'Basic ' + client_credentials.toString('base64');
 
     let FETCH_URL = `${AUTHORISE_URL}client_id=${client_id}&response_type=code&redirect_uri=${CALLBACK_URL}`;
     console.log("requests authorization url: ", FETCH_URL);
 
-    fetch(TOKEN_URL, {
+    TOKEN_URL = 'https://accounts.spotify.com/api/token';
+
+    var formBody = [];
+    var encodedKey = encodeURIComponent('grant_type');
+    var encodedValue = encodeURIComponent('client_credentials');
+    formBody.push(encodedKey + "=" + encodedValue);
+    formBody = formBody.join("&");
+    var authOptions = {
       method: 'POST',
       headers: {
+        'Authorization': 'Basic ' + (new Buffer(client_id + ':' + client_secret).toString('base64')),
         'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Headers': 'Origin, Content-Type, X-Auth-Token',
-        'Authorization': 'Basic ' + (new Buffer(client_id + ':' + client_secret).toString('base64'))
+        "Access-Control-Allow-Headers": "Origin, X-Requested-With, Content-Type, Accept",
+        'Accept': 'application/json',
+        'Content-Type': 'application/x-www-form-urlencoded'
       },
-      mode: 'no-cors',
-      body: {
-        grant_type: 'client_credentials'
-      }
-    }).then(response => {
+      body: formBody
+    };
+
+    fetch(TOKEN_URL, authOptions).then(response => {
       console.log("token acces response: ", response);
+      return response.json();
+    }).then(result => {
+      console.log("token acces result: ", result);
+      var accessToken = result.access_token;
+      this.props.setAccessToken(accessToken);
+      this.getFeaturePlayLists();
     });
 
   }
+
   getFeaturePlayLists() {
     const FeaturePlaylists_URL = 'https://api.spotify.com/v1/browse/featured-playlists?';
     const FETCH_URL = `${FeaturePlaylists_URL}country='FR'&limit='10'`;
@@ -131,6 +147,7 @@ class App extends Component {
     if (artist !== null) {
       let FETCH_URL = `${ALBUM_URL}${artist.id}/top-tracks?country=FR&`;
       fetch(FETCH_URL, {method: 'GET'}).then(response => response.json()).then(json => {
+        console.log('searchTopTracks res', json);
         const {tracks} = json;
         this.props.setTopTracks(tracks);
       });
@@ -162,8 +179,12 @@ class App extends Component {
             ? <Profile artist={this.props.artist}/>
             : <div></div>
         } < Gallery tracks = {
-          this.props.top_tracks
+          this.props.topTracks
         } /> </div>}
+        {this.props.accessToken !== ''
+          ? < NewReleases />
+          : <div></div>}
+            <Player />
       </div>
     );
   }
@@ -174,6 +195,4 @@ function mapStateToProps(state) {
   return {artist, topTracks};
 }
 
-render() {
-  const {showMediaPlayer, currentTrack, repeatTrack, autoPlay} = this.state
-  return ( < div > <button onClick= { () => this.setState({ showMediaPlayer: !showMediaPlayer }) }>
+export default connect(mapStateToProps, {setArtist, setTopTracks, setAccessToken})(App);

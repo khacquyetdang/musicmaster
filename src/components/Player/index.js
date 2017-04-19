@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as actions from '../../actions/index';
 import * as toggleTypes from '../../constants/toggleTypes';
-import { addAccessTokenWith } from '../../services/api';
+//import { addAccessTokenWith } from '../../services/api';
 import ButtonInline from '../../components/ButtonInline';
 import ReactTooltip from 'react-tooltip';
 import Clipboard from 'react-clipboard.js';
@@ -176,7 +176,7 @@ class Player extends React.Component {
               <p>Song URL copied!</p>
             </ReactTooltip>
           </div>
-          <audio id="audio" ref="audio" src={addAccessTokenWith(stream_url, '?')}></audio>
+          <audio id="audio" ref="audio" src={stream_url}></audio>
         </div>
       </div>
     );
@@ -197,7 +197,6 @@ class Player extends React.Component {
 
 function mapStateToProps(state) {
   return {
-    currentUser: state.session.user,
     activeTrackId: state.player.activeTrackId,
     isPlaying: state.player.isPlaying,
     entities: state.entities,

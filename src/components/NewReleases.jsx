@@ -125,7 +125,6 @@ function mapStateToProps(state) {
   console.log("mapStateToProps new releases state", state);
   const {accessToken, newReleases } = state;
   return {accessToken, newReleases};
-
 }
 
 export default connect(mapStateToProps, {setAccessToken, setNewReleases}) (NewReleases);
