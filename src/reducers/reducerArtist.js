@@ -1,6 +1,6 @@
 import {
     SET_ARTIST
-} from '../constants';
+} from '../constants/constants';
 
 import {bake_cookie} from 'sfcookies';
 

@@ -1,6 +1,6 @@
 import {
     SET_NEW_RELEASES
-} from '../constants';
+} from '../constants/constants';
 
 //import {bake_cookie, read_cookie} from 'sfcookies';
 

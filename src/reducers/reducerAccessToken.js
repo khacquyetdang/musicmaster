@@ -1,6 +1,6 @@
 import {
     SET_ACCESS_TOKEN
-} from '../constants';
+} from '../constants/constants';
 
 export default (state = '', action) => {
 
