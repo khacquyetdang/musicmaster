@@ -22,7 +22,7 @@ class NewReleases extends Component {
   }
 
   componentDidMount(){
-    console.log("newReleases props", this.props);
+    //console.log("newReleases props", this.props);
     this.getNewReleaseLists();
   }
 
@@ -70,7 +70,7 @@ class NewReleases extends Component {
     //const FeaturePlaylists_URL = 'https://api.spotify.com/v1/browse/featured-playlists?';
     //const FETCH_URL = `${FeaturePlaylists_URL}country='FR'&limit='10'`;
     const { accessToken } = this.props;
-    console.log("accesToken", this.props);
+    console.log("getNewReleaseLists accesToken", this.props);
     var Spotify = require('spotify-web-api-js');
     var spotifyApi = new Spotify();
     this.setState({spotifyApi});
@@ -82,6 +82,8 @@ class NewReleases extends Component {
     }
     spotifyApi.getNewReleases(params)
     .then(data =>{
+      console.log("shopifyygetNewReleaseLists data", data);
+
       const { albums }  = data;
       //this.props.setNewReleases(albums);
       this.setState({newReleasesItems: albums.items});
@@ -122,7 +124,7 @@ class NewReleases extends Component {
   }
 }
 function mapStateToProps(state) {
-  console.log("mapStateToProps new releases state", state);
+  //console.log("mapStateToProps new releases state", state);
   const {accessToken, newReleases } = state;
   return {accessToken, newReleases};
 }

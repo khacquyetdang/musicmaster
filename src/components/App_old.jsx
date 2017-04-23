@@ -12,13 +12,6 @@ import Profile from './Profile';
 import Gallery from './Gallery';
 import NewReleases from './NewReleases';
 
-import MediaPlayer from './reactMediaPlayer/MediaPlayer'
-import AudioPlayer from './reactMediaPlayer/AudioPlayer'
-import VideoPlayer from './reactMediaPlayer/VideoPlayer'
-
-import {Media, Player, controls} from 'react-media-player'
-const {PlayPause} = controls;
-
 class App extends Component {
   constructor(props) {
     super(props);
@@ -52,7 +45,7 @@ class App extends Component {
 
     // your application requests authorization
     var myHeaders = new Headers({
-      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Origin': 'http://localhost:3000',
       'Access-Control-Allow-Headers': 'Origin, Content-Type, X-Auth-Token',
       'Authorization': 'Basic ' + (new Buffer(client_id + ':' + client_secret).toString('base64'))
     });
@@ -74,6 +67,7 @@ class App extends Component {
     request.post(authOptions, function(error, response, body) {
       if (!error && response.statusCode === 200) {
 
+        console.log("response body", body);
         // use the access token to access the Spotify Web API
         var accesToken = body.access_token;
         this.props.setAccessToken(accesToken);
@@ -100,6 +94,7 @@ class App extends Component {
     var encodedValue = encodeURIComponent('client_credentials');
     formBody.push(encodedKey + "=" + encodedValue);
     formBody = formBody.join("&");
+    // need to add https://accounts.spotify.com/api/token in the cors extension of chrome to get it works
     var authOptions = {
       method: 'POST',
       headers: {
@@ -109,6 +104,7 @@ class App extends Component {
         'Accept': 'application/json',
         'Content-Type': 'application/x-www-form-urlencoded'
       },
+      crossDomain: true,
       body: formBody
     };
 
@@ -148,7 +144,7 @@ class App extends Component {
   }
 
   render() {
-    return ( < div className = "App" > < div className = "App-title" > Music Master < /div> < FormGroup > <
+    return (< div className = "App" > < div className = "App-title" > Music Master < /div> < FormGroup > <
     InputGroup >
     < FormControl type = "text"
     placeholder = "serach an artist..."
@@ -179,29 +175,18 @@ class App extends Component {
     } < Gallery tracks = {
       this.props.topTracks
     }
-    /> {
+    / > {
       this.props.accessToken !== ''
       ? < NewReleases />
-      : <div> </div>
-    } <div>
-    <AudioPlayer src="https://p.scdn.co/mp3-preview/8d5db5c968b12a33224143b525cb344b9007f546"/> </div>
-
-    < /div >
-  } < /div>
-);
-}
-}
+    : <div></div>
+} </div>
+} </div>);
+}}
 
 function mapStateToProps(state) {
-  const {
-    artist, topTracks, accessToken
-  } = state;
-  return {
-    artist, topTracks, accessToken
-  };
+  const {artist, topTracks, accessToken} = state;
+  return {artist, topTracks, accessToken};
 
 }
 
-export default connect(mapStateToProps, {
-  setArtist, setTopTracks, setAccessToken
-})(App);
+export default connect(mapStateToProps, {setArtist, setTopTracks, setAccessToken})(App);

@@ -33,7 +33,7 @@ class App extends Component {
     const artist = read_cookie('artist');
     this.props.setArtist(artist);
     if (artist != null) {
-      console.log("componentDidMount artist", artist);
+      //console.log("componentDidMount artist", artist);
       this.searchTopTracks(artist);
     }
     this.authentificationProcess();
@@ -96,6 +96,8 @@ class App extends Component {
     var encodedValue = encodeURIComponent('client_credentials');
     formBody.push(encodedKey + "=" + encodedValue);
     formBody = formBody.join("&");
+    //// need to add https://accounts.spotify.com/api/token in the cors extension of chrome to get it works
+
     var authOptions = {
       method: 'POST',
       headers: {
@@ -105,6 +107,7 @@ class App extends Component {
         'Accept': 'application/json',
         'Content-Type': 'application/x-www-form-urlencoded'
       },
+      crossDomain: true,
       body: formBody
     };
 
@@ -116,6 +119,8 @@ class App extends Component {
       var accessToken = result.access_token;
       this.props.setAccessToken(accessToken);
       this.getFeaturePlayLists();
+    }).catch(function(error) {
+        console.log("authentificationProcess error ", error);
     });
 
   }
@@ -144,12 +149,12 @@ class App extends Component {
   }
 
   searchTopTracks(artist) {
-    console.log('searchTopTracks this.props', this.props);
+    //console.log('searchTopTracks this.props', this.props);
     const ALBUM_URL = 'https://api.spotify.com/v1/artists/';
     if (artist !== null) {
       let FETCH_URL = `${ALBUM_URL}${artist.id}/top-tracks?country=FR&`;
       fetch(FETCH_URL, {method: 'GET'}).then(response => response.json()).then(json => {
-        console.log('searchTopTracks res', json);
+        //console.log('searchTopTracks res', json);
         const {tracks} = json;
         this.props.setTopTracks(tracks);
       });
@@ -158,7 +163,7 @@ class App extends Component {
 
   render()
   {
-    console.log('render this.props', this.props);
+    //console.log('render this.props', this.props);
     return (
       <div className="App">
         <div className="App-title">Music Master</div>
@@ -193,8 +198,8 @@ class App extends Component {
 }
 
 function mapStateToProps(state) {
-  const {artist, topTracks} = state;
-  return {artist, topTracks};
+  const {artist, topTracks, accessToken} = state;
+  return {artist, topTracks, accessToken};
 }
 
 export default connect(mapStateToProps, {setArtist, setTopTracks, setAccessToken})(App);

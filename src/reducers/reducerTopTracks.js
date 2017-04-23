@@ -9,7 +9,7 @@ export default (state = [], action) => {
             const {
                 topTracks
             } = action;
-            console.log("setTopTracks reducers", topTracks);
+            //console.log("setTopTracks reducers", topTracks);
             var tracksDico = topTracks.reduce(function(acc, val){
               const id = val.id;
               acc[id] = val;

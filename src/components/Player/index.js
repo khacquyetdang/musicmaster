@@ -179,11 +179,11 @@ class Player extends React.Component {
   }
 
   render() {
-    //const playerClass = classNames('player', {'player-visible': this.props.activeTrackId});
+    const playerClass = classNames('player', {'player-visible': this.props.activeTrackId});
     //const playerClass = classNames('player', {'player-visible' : 1});
 
-    //return <div className={playerClass}>{this.renderNav()}</div>;
-    return <div className="player player-visible">{this.renderNav()}</div>;
+    return <div className={playerClass}>{this.renderNav()}</div>;
+    //return <div className="player player-visible">{this.renderNav()}</div>;
 
   }
 
@@ -198,7 +198,7 @@ function mapStateToProps(state) {
     isInShuffleMode: false,
     volume: 70
   };*/
-  console.log("player state", state);
+  //console.log("player state", state);
   return {
     activeTrackId: state.player.activeTrackId,
     isPlaying: state.player.isPlaying,

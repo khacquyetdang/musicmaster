@@ -9,7 +9,7 @@ import reducer from './reducers';
 //import './styles/index.scss';
 require('./styles/index.scss');
 
-const middleware = applyMiddleware(thunk, createLogger());
+const middleware = applyMiddleware(thunk);
 /** add comment **/
 const store = createStore(reducer, middleware);
 

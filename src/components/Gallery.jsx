@@ -38,7 +38,7 @@ class Gallery extends Component {
     }*/
   }
   render() {
-    console.log("Gallery props", this.props);
+    //console.log("Gallery props", this.props);
     const {tracks} = this.props;
     return (
       <div>
@@ -50,7 +50,7 @@ class Gallery extends Component {
               <img src={tracksImg} className="track-img" alt="track"></img>
               <div className="track-play">
                 <div className="track-play-inner">
-                  {this.state.playingUrl === track.preview_url
+                  {this.props.activeTrackId === track.id
                     ? <span>| |</span>
                     : <span>&#9654;</span>}
                 </div>
