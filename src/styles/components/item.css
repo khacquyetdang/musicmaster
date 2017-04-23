@@ -1,0 +1,18 @@
+.item {
+  height: 40px;
+  display: flex; }
+  .item:hover .action {
+    opacity: 1;
+    margin: auto 10px; }
+  .item-content {
+    position: relative;
+    width: 100%;
+    padding: 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; }
+    .item-content a {
+      overflow: hidden;
+      height: 14px; }
+  .item .is-active {
+    color: #61B25A; }

@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
 import './App.css';
+import {connect} from 'react-redux';
+import {activateTrack, setTopTracks} from '../actions/index';
 
 class Gallery extends Component {
 
@@ -12,8 +14,13 @@ class Gallery extends Component {
       playing: false
     }
   }
-  playAudio(previewUrl)
+  playAudio(track)
   {
+    const  previewUrl = track.preview_url;
+    const  activeTrackId = track.id;
+    this.props.activateTrack(activeTrackId);
+
+    /*
     console.log("previewUrl", previewUrl);
     let audio = new Audio(previewUrl);
     if (this.state.playing === false) {
@@ -28,7 +35,7 @@ class Gallery extends Component {
         audio.play();
         this.setState({playing: true, playingUrl: previewUrl, audio});
       }
-    }
+    }*/
   }
   render() {
     console.log("Gallery props", this.props);
@@ -36,9 +43,10 @@ class Gallery extends Component {
     return (
       <div>
         {tracks != null
-          ? (tracks.map((track, k) => {
+          ? (Object.keys(tracks).map((key, index) => {
+            const track  = tracks[key];
             const tracksImg = track.album.images[0].url;
-            return (<div key={k} className="track" onClick={() => this.playAudio(track.preview_url)}>
+            return (<div key={index} className="track" onClick={() => this.playAudio(track)}>
               <img src={tracksImg} className="track-img" alt="track"></img>
               <div className="track-play">
                 <div className="track-play-inner">
@@ -57,6 +65,10 @@ class Gallery extends Component {
     );
   }
 }
-
-
-export default Gallery;
+function mapStateToProps(state) {
+  return {
+    isPlaying: state.player.isPlaying,
+    activeTrackId: state.player.activeTrackId
+  };
+}
+export default connect(mapStateToProps, {setTopTracks, activateTrack})(Gallery);

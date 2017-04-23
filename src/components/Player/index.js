@@ -13,7 +13,8 @@ import Clipboard from 'react-clipboard.js';
 class Player extends React.Component {
   constructor(props) {
     super(props);
-
+    // this is normally not neccessary any more since we
+    // create app with create-react-app
     this.updateProgress = this.updateProgress.bind(this);
     this.setAudioPosition = this.setAudioPosition.bind(this);
   }
@@ -71,6 +72,7 @@ class Player extends React.Component {
       activeTrackId,
       isPlaying,
       entities,
+      topTracks,
       playlist,
       isInShuffleMode,
       onSetToggle,
@@ -85,9 +87,12 @@ class Player extends React.Component {
       return null;
     }
 
-    const track = entities.tracks[activeTrackId];
-    const {user, title, stream_url} = track;
-    const {username} = entities.users[user];
+    const track = topTracks[activeTrackId];
+    //const {user, title, stream_url} = track;
+    const title = track.name;
+    const stream_url = track.preview_url;
+    //const {username} = entities.users[user];
+    const {username} = "User name need to set to something";
 
     const isMuted = !volume;
 
@@ -174,31 +179,35 @@ class Player extends React.Component {
   }
 
   render() {
-    const playerClass = classNames('player', {'player-visible': this.props.activeTrackId});
+    //const playerClass = classNames('player', {'player-visible': this.props.activeTrackId});
+    //const playerClass = classNames('player', {'player-visible' : 1});
 
-    return <div className={playerClass}>{this.renderNav()}</div>;
+    //return <div className={playerClass}>{this.renderNav()}</div>;
+    return <div className="player player-visible">{this.renderNav()}</div>;
+
   }
 
 }
 
 function mapStateToProps(state) {
-  return {
+  /*return {
     activeTrackId: 0,
     isPlaying: true,
     entities: [],
     playlist: [],
     isInShuffleMode: false,
     volume: 70
-  };
-  /*return {
+  };*/
+  console.log("player state", state);
+  return {
     activeTrackId: state.player.activeTrackId,
     isPlaying: state.player.isPlaying,
     entities: state.entities,
+    topTracks: state.topTracks,
     playlist: state.player.playlist,
     isInShuffleMode: state.player.isInShuffleMode,
     volume: state.player.volume,
   };
-  */
 }
 
 function mapDispatchToProps(dispatch) {
@@ -217,9 +226,10 @@ function mapDispatchToProps(dispatch) {
 
 Player.propTypes = {
   currentUser: React.PropTypes.object,
-  activeTrackId: React.PropTypes.number,
+  activeTrackId: React.PropTypes.string,
   isPlaying: React.PropTypes.bool,
   entities: React.PropTypes.object,
+  topTracks: React.PropTypes.object,
   playlist: React.PropTypes.array,
   onTogglePlayTrack: React.PropTypes.func,
   onSetToggle: React.PropTypes.func,

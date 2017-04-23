@@ -1,0 +1,8 @@
+.dashboard {
+  display: flex;
+  flex-direction: row; }
+  .dashboard-main {
+    margin-right: 20px;
+    flex: 3; }
+  .dashboard-side {
+    flex: 1; }

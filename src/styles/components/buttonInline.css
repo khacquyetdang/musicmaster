@@ -1,0 +1,13 @@
+.button-inline {
+  border-width: 0;
+  background: transparent;
+  color: inherit;
+  text-align: inherit;
+  -webkit-font-smoothing: inherit;
+  padding: 0;
+  font-size: inherit;
+  cursor: pointer;
+  white-space: nowrap; }
+  .button-inline:focus {
+    background: transparent;
+    outline: none; }

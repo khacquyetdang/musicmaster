@@ -1,11 +1,9 @@
-@import '../custom/variable.scss';
-
 .button-ghost {
   display: inline-block;
-  border: 1px solid $mainColor;
-  height: $padding;
-  line-height: $padding;
-  color: $mainColor;
+  border: 1px solid #61B25A;
+  height: 20px;
+  line-height: 20px;
+  color: #61B25A;
   -webkit-border-radius: 5px;
   -webkit-background-clip: padding-box;
   -moz-border-radius: 5px;
@@ -23,24 +21,16 @@
   -moz-box-sizing: content-box;
   box-sizing: content-box;
   cursor: pointer;
-  -webkit-backface-visibility: hidden;
-
-  &-small {
-    height: $padding / 2;
-    line-height: $padding / 2;
-  }
-
-  &:hover {
+  -webkit-backface-visibility: hidden; }
+  .button-ghost-small {
+    height: 10px;
+    line-height: 10px; }
+  .button-ghost:hover {
     -webkit-transition: 0.2s ease;
     -moz-transition: 0.2s ease;
     -o-transition: 0.2s ease;
     transition: 0.2s ease;
-    background-color: $mainColor;
-    color: #FFFFFF !important;
-  }
-
-  &:focus {
-    outline: none;
-  }
-
-}
+    background-color: #61B25A;
+    color: #FFFFFF !important; }
+  .button-ghost:focus {
+    outline: none; }

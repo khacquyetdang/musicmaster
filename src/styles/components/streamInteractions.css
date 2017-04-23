@@ -1,0 +1,22 @@
+.stream-interactions {
+  display: flex;
+  padding-bottom: 10px; }
+  .stream-interactions-item {
+    background: #262626;
+    border: 1px solid #3A3A3A;
+    padding: 10px;
+    margin-right: 10px; }
+
+.stream-interaction {
+  display: flex;
+  align-items: flex-end; }
+  .stream-interaction-icon {
+    font-size: 16px;
+    margin-right: 5px; }
+    .stream-interaction-icon-active {
+      color: #61B25A; }
+  .stream-interaction-content {
+    display: flex;
+    font-size: 14px; }
+    .stream-interaction-content div {
+      margin: 0 5px; }

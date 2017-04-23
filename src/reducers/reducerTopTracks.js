@@ -9,7 +9,14 @@ export default (state = [], action) => {
             const {
                 topTracks
             } = action;
-            return topTracks;
+            console.log("setTopTracks reducers", topTracks);
+            var tracksDico = topTracks.reduce(function(acc, val){
+              const id = val.id;
+              acc[id] = val;
+              return acc;
+            }, {});
+
+            return tracksDico;
         default:
             return state;
     }

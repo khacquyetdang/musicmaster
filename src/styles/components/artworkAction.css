@@ -1,0 +1,21 @@
+.artwork-action {
+  position: relative; }
+  .artwork-action-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    color: #61B25A;
+    font-size: 34px;
+    width: 100%;
+    height: 100%;
+    background: rgba(89, 89, 89, 0);
+    opacity: 0;
+    cursor: pointer;
+    transition: opacity 0.2s; }
+    .artwork-action-overlay:hover, .artwork-action-overlay-visible {
+      background: rgba(255, 255, 255, 0.7);
+      opacity: 1; }
+    .artwork-action-overlay i {
+      margin-top: 15px; }

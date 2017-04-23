@@ -1,0 +1,5 @@
+.track-actions-list {
+  display: flex; }
+  .track-actions-list-item {
+    white-space: nowrap;
+    margin: 0 0 0 10px; }

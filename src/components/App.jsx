@@ -4,7 +4,8 @@ var request = require('request');
 import {bake_cookie, read_cookie} from 'sfcookies';
 import {connect} from 'react-redux';
 import {setArtist, setTopTracks, setAccessToken} from '../actions';
-import './App.css';
+import './App.scss';
+import '../styles/index.css';
 import {FormGroup, FormControl, InputGroup, Glyphicon} from 'react-bootstrap';
 import * as SpotifyWebApi from 'spotify-web-api-js';
 import Profile from './Profile';
@@ -89,6 +90,7 @@ class App extends Component {
 
     TOKEN_URL = 'https://accounts.spotify.com/api/token';
 
+    console.log("authentificationProcess");
     var formBody = [];
     var encodedKey = encodeURIComponent('grant_type');
     var encodedValue = encodeURIComponent('client_credentials');

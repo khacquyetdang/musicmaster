@@ -1,0 +1,21 @@
+.action {
+  position: absolute;
+  right: 0;
+  top: 0;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  opacity: 0;
+  transition: all 0.2s;
+  -webkit-transition: all 0.2s;
+  transition-timing-function: ease;
+  -webkit-transition-timing-function: ease; }
+  .action-visible {
+    margin: auto 10px;
+    opacity: 1; }
+  .action i {
+    margin: 0 5px;
+    cursor: pointer;
+    font-size: 16px; }
+    .action i:hover {
+      color: #61B25A; }

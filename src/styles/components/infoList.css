@@ -1,0 +1,8 @@
+.info-list {
+  display: flex;
+  justify-content: space-between;
+  width: 100%; }
+  .info-list-item {
+    min-width: 85px; }
+    .info-list-item-active {
+      color: #61B25A; }

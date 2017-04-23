@@ -1,0 +1,7 @@
+.input-menu {
+  font-size: 14px;
+  color: #A0A0A0;
+  border: 0;
+  background-color: #262626; }
+  .input-menu:focus {
+    outline: none; }

@@ -1,0 +1,24 @@
+body {
+  background: #1C1C1C;
+  font: 400 13px "CoreSans", Arial,sans-serif;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  color: #A0A0A0;
+  letter-spacing: .02em;
+  position: relative;
+  margin: 80px 40px; }
+
+ul, li {
+  list-style: none;
+  padding: 0;
+  margin: 0; }
+
+a {
+  color: #A0A0A0;
+  text-decoration: none; }
+  a:hover {
+    color: rgba(255, 255, 255, 0.8); }
+  a:active {
+    color: rgba(255, 255, 255, 0.4); }
+  a:visited {
+    color: rgba(200, 200, 200, 0.4); }
