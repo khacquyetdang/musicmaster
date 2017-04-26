@@ -12,6 +12,7 @@ import Profile from './Profile';
 import Gallery from './Gallery';
 import Player from './Player';
 import NewReleases from './NewReleases';
+import Volume from './Volume';
 
 class App extends Component {
   constructor(props) {
@@ -120,7 +121,7 @@ class App extends Component {
       this.props.setAccessToken(accessToken);
       this.getFeaturePlayLists();
     }).catch(function(error) {
-        console.log("authentificationProcess error ", error);
+      console.log("authentificationProcess error ", error);
     });
 
   }
@@ -170,31 +171,32 @@ class App extends Component {
         <FormGroup>
           <InputGroup>
             <FormControl type="text" placeholder="serach an artist..." value={this.state.query} onChange={event => {
-              this.setState({query: event.target.value})
-            }} onKeyPress={event => {
-              if (event.key === 'Enter') {
-                this.search();
-              }
-            }}/>
-            <InputGroup.Addon onClick={() => this.search()}>
-              <Glyphicon glyph="search"></Glyphicon>
-            </InputGroup.Addon>
-          </InputGroup>
-        </FormGroup>
-        {< div > {
-          this.props.artist !== null
+                this.setState({query: event.target.value})
+              }} onKeyPress={event => {
+                if (event.key === 'Enter') {
+                  this.search();
+                }
+              }}/>
+              <InputGroup.Addon onClick={() => this.search()}>
+                <Glyphicon glyph="search"></Glyphicon>
+              </InputGroup.Addon>
+            </InputGroup>
+          </FormGroup>
+          {< div > {
+            this.props.artist !== null
             ? <Profile artist={this.props.artist}/>
-            : <div></div>
-        } < Gallery tracks = {
-          this.props.topTracks
-        } /> </div>}
-        {this.props.accessToken !== ''
-          ? < NewReleases />
-          : <div></div>}
-            <Player />
-      </div>
-    );
-  }
+          : <div></div>
+      } < Gallery tracks = {
+        this.props.topTracks
+      } /> </div>}
+      {this.props.accessToken !== ''
+        ? < NewReleases />
+      : <div></div>}
+      <Volume />
+      <Player />
+    </div>
+  );
+}
 }
 
 function mapStateToProps(state) {

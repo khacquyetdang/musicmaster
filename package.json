@@ -4,7 +4,8 @@
   "private": true,
   "dependencies": {
     "react": "^15.5.4",
-    "react-dom": "^15.5.4"
+    "react-dom": "^15.5.4",
+    "react-rangeslider": "^2.0.1"
   },
   "devDependencies": {
     "node-sass": "^4.5.2",

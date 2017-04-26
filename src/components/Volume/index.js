@@ -23,7 +23,8 @@ function Volume({ toggle, volume, onChangeVolume }) {
   const volumeClass = classNames(
     'volume',
     {
-      'volume-visible': toggle[toggleTypes.VOLUME]
+      'volume-visible': true
+      //'volume-visible': toggle[toggleTypes.VOLUME]
     }
   );
 

@@ -2,6 +2,7 @@ import { SET_ARTIST, SET_TOP_TRACKS, SET_ACCESS_TOKEN, SET_NEW_RELEASES } from '
 import { activateTrack, activateIteratedTrack,
    addTrackToPlaylist, removeTrackFromPlaylist,
     clearPlaylist, togglePlayTrack, toggleShuffleMode, changeVolume } from './player';
+import { setToggle } from './toggle';
 
 
 export {
@@ -12,7 +13,8 @@ export {
   clearPlaylist,
   activateIteratedTrack,
   toggleShuffleMode,
-  changeVolume
+  changeVolume,
+  setToggle
 };
 
 export const setArtist = (artist) => {

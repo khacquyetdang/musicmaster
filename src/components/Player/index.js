@@ -215,9 +215,9 @@ function mapDispatchToProps(dispatch) {
     onTogglePlayTrack: bindActionCreators(actions.togglePlayTrack, dispatch),
     onSetShuffleMode: bindActionCreators(actions.toggleShuffleMode, dispatch),
     onActivateIteratedTrack: bindActionCreators(actions.activateIteratedTrack, dispatch),
+    onSetToggle: bindActionCreators(actions.setToggle, dispatch),
     /*
     onTogglePlayTrack: bindActionCreators(actions.togglePlayTrack, dispatch),
-    onSetToggle: bindActionCreators(actions.setToggle, dispatch),
     onActivateIteratedTrack: bindActionCreators(actions.activateIteratedTrack, dispatch),
     onLike: bindActionCreators(actions.like, dispatch),
     onSetShuffleMode: bindActionCreators(actions.toggleShuffleMode, dispatch),*/
